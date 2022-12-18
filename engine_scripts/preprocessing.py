@@ -7,6 +7,7 @@ import os
 def bake(path):
     object_image = cv2.imread(path)
     object_image = cv2.resize(object_image, (128,128))
+    object_image = cv2.cvtColor(object_image, cv2.COLOR_BGR2RGB)
     object_image = object_image / 255.0
 
     object_image = object_image[np.newaxis, ...]

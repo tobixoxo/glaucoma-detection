@@ -2,7 +2,7 @@ from flask import Flask, flash, request, redirect, url_for, render_template
 import urllib.request
 import os
 from werkzeug.utils import secure_filename
-from engine_scripts import preprocessing
+from engine_scripts import preprocessing, generate_result
 
 app = Flask(__name__)
 
@@ -58,10 +58,10 @@ def upload_image():
 
         #print('upload_image filename: ' + filename)
         flash('Image successfully uploaded and glaucoma status displayed below')
-
         preprocessed_image = preprocessing.bake(os.path.join(app.config['UPLOAD_FOLDER'], saved_file_name_prefix + '.' + extension))
-        print("success")
-
+        verdict = generate_result.predict_result(preprocessed_image)
+        #  verdict = 0 -> Glaucomatus
+        # verdict = 1 -> glaucomatus
         return render_template('index.html', filename=saved_file_name_prefix + '.' + extension,glaucoma_status="nigga")
     else:
         flash('Allowed image types are - png,jpeg')

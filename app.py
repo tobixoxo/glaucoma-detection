@@ -1,8 +1,8 @@
-# app.py
 from flask import Flask, flash, request, redirect, url_for, render_template
 import urllib.request
 import os
 from werkzeug.utils import secure_filename
+from engine_scripts import preprocessing
 
 app = Flask(__name__)
 
@@ -14,20 +14,21 @@ app.config['MAX_CONTENT_LENGTH'] = 16 * 1024 * 1024
 
 ALLOWED_EXTENSIONS = set(['png', 'jpg', 'jpeg'])
 
-counter = 0
-
 def count_up():
-    global counter
-    counter = counter + 1
+    counter_file=open('semaphore/counter.txt','r+')
+    counter = int(counter_file.read()) + 1
+    counter_file.seek(0,0) 
+    counter_file.write(str(counter))
+    counter_file.close()
     return str(counter)
 
 def allowed_file(filename):
     return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
 
-
 @app.route('/')
 def home():
     return render_template('index.html')
+
 
 
 @app.route('/', methods=['POST'])
@@ -56,8 +57,12 @@ def upload_image():
             app.config['UPLOAD_FOLDER'], saved_file_name_prefix + '.' + extension))
 
         #print('upload_image filename: ' + filename)
-        flash('Image successfully uploaded and displayed below')
-        return render_template('index.html', filename=saved_file_name_prefix + '.' + extension)
+        flash('Image successfully uploaded and glaucoma status displayed below')
+
+        preprocessed_image = preprocessing.bake(os.path.join(app.config['UPLOAD_FOLDER'], saved_file_name_prefix + '.' + extension))
+        print("success")
+
+        return render_template('index.html', filename=saved_file_name_prefix + '.' + extension,glaucoma_status="nigga")
     else:
         flash('Allowed image types are - png,jpeg')
         return redirect(request.url)

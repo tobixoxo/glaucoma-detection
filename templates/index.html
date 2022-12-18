@@ -2,15 +2,13 @@
 
 <head>
     <title>Glaucoma Detection Frontend</title>
-    <link rel = "stylesheet" href = 'static/stylesheet.css'>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
 </head>
 
 <body>
     <p>
-    <h1 style="text-align: center;" >Welcome to Glaucoma Detector</h1>
+    <h1 align="center">Welcome to Glaucoma Detector</h1>
     </p>
     <div class="container">
         <div class="row">
@@ -31,14 +29,19 @@
                 <img src="{{ url_for('display_image', filename=filename) }}">
             </div>
             {% endif %}
+            {% if glaucoma_status %}
+            <div>
+                <p>{{ glaucoma_status }}</p>
+            </div>
+            {% endif %}
             <form method="post" action="/" enctype="multipart/form-data">
                 <dl>
                     <p>
-                        <input type="file" name="file" class="button" autocomplete="off" required>
+                        <input type="file" name="file" class="form-control" autocomplete="off" required>
                     </p>
                 </dl>
                 <p>
-                    <input type="submit" value="Submit" class="button">
+                    <input type="submit" value="Submit" class="btn btn-info">
                 </p>
             </form>
 

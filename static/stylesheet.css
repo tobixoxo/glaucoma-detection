@@ -1,6 +1,18 @@
 body {
     font-family: 'Chakra Petch', sans-serif;
-    background-color: rgb(32, 92, 144);
+    background-color: rgb(176, 158, 236);
+    margin: 0%;
+    z-index: 1;
+}
+
+::selection {
+    background: rgb(142, 35, 184);
+    color: rgb(204, 199, 230);
+}
+
+#title {
+    font-size: 12vh;
+    text-align: center;
 }
 
 .container {
@@ -8,16 +20,51 @@ body {
     flex-direction: column;
     align-items: center;
     justify-content: center;
+
+    border-radius: 10px;
+    margin-left: 5vw;
+    margin-right: 5vw;
+    background-color: rgb(191, 127, 217);
 }
 
-.button {
-    border-radius: 10px;
-    height: 35px;
-    width: 55px;
-    font-family: 'Josefin Sans', sans-serif;
-}
 .button:hover {
     transform: scale(1.1);
-    background-color: rgb(45, 119, 184);
-    box-shadow: 5px 10px 7px #000000;
+    background-color: rgb(52, 66, 198);
+    box-shadow: 5px 10px 7px #7a338b;
+}
+
+.row {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.button {
+    border-radius: 5px;
+    width: 7vw;
+    background-color: rgb(88, 84, 213);
+    transition: 0.3s;
+}
+input[type='file'] {
+    border-radius: 5px;
+    width: 20vw;
+    height: 20vw;
+    background-color: rgb(85, 80, 218);
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+input {
+    padding: 10px;
+    margin: 10px;
+}
+label {
+    margin: 10px;
+    padding: 10px;
+}
+form > {
+    padding: 10px;
 }

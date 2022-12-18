@@ -1,59 +1,52 @@
 <html>
+    <head>
+        <title>Glaucoma Detection Frontend</title>
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+        <link rel="stylesheet" href="/static/stylesheet.css" />
+        <link
+            href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@600&display=swap"
+            rel="stylesheet"
+        />
+    </head>
 
-<head>
-    <title>Glaucoma Detection Frontend</title>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" />
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
-</head>
+    <body>
+        <div class="stage">
+            <h1 id="title">Glaucoma Detector</h1>
+            <div class="container">
+                <div>
+                    <h1>Upload Retinal Scan</h1>
+                    {% with messages = get_flashed_messages() %} {% if messages
+                    %} {% for message in messages %}
+                    <p>{{ message }}</p>
+                    {% endfor %} {% endif %} {% endwith %} {% if filename %}
 
-<body>
-    <p>
-    <h1 align="center">Welcome to Glaucoma Detector</h1>
-    </p>
-    <div class="container">
-        <div class="row">
-            <h2>Select a file to upload</h2>
-            <p>
-                {% with messages = get_flashed_messages() %}
-                {% if messages %}
-            <ul>
-                {% for message in messages %}
-                <li>{{ message }}</li>
-                {% endfor %}
-            </ul>
-            {% endif %}
-            {% endwith %}
-            </p>
-            {% if filename %}
-            <div>
-                <img src="{{ url_for('display_image', filename=filename) }}">
+                    <div>
+                        <img
+                            src="{{ url_for('display_image', filename=filename) }}"
+                        />
+                    </div>
+                    <div>
+                        <p>{{ glaucoma_status }}</p>
+                    </div>
+                    {% endif %} {% if glaucoma_status %}
+                </div>
+                {% endif %}
+                <form method="post" action="/" enctype="multipart/form-data">
+                    <label for="file-upload">
+                        <input
+                            id="file-upload"
+                            type="file"
+                            name="file"
+                            class="button"
+                            autocomplete="off"
+                            required
+                        />
+                    </label>
+
+                    <input type="submit" value="Submit" class="button" />
+                </form>
             </div>
-            {% endif %}
-            {% if glaucoma_status %}
-            <div>
-                <p>{{ glaucoma_status }}</p>
-            </div>
-            {% endif %}
-            <form method="post" action="/" enctype="multipart/form-data">
-                <dl>
-                    <p>
-                        <input type="file" name="file" class="form-control" autocomplete="off" required>
-                    </p>
-                </dl>
-                <p>
-                    <input type="submit" value="Submit" class="btn btn-info">
-                </p>
-            </form>
-
-            <ul>
-                <li>
-                    <a href="{{url_for('desc')}}">
-                        About
-                    </a>
-                </li>
-            </ul>
         </div>
-    </div>
-</body>
-
+    </body>
 </html>

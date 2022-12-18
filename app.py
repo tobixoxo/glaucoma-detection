@@ -60,9 +60,13 @@ def upload_image():
         flash('Image successfully uploaded and glaucoma status displayed below')
         preprocessed_image = preprocessing.bake(os.path.join(app.config['UPLOAD_FOLDER'], saved_file_name_prefix + '.' + extension))
         verdict = generate_result.predict_result(preprocessed_image)
+        if(verdict==0):
+            message="The patient has glaucoma"
+        if(verdict==1):
+            message="The patient does not have glaucoma"
         #  verdict = 0 -> Glaucomatus
         # verdict = 1 -> glaucomatus
-        return render_template('index.html', filename=saved_file_name_prefix + '.' + extension,glaucoma_status="nigga")
+        return render_template('index.html', filename=saved_file_name_prefix + '.' + extension,glaucoma_status=message)
     else:
         flash('Allowed image types are - png,jpeg')
         return redirect(request.url)
@@ -77,4 +81,4 @@ def desc():
     return render_template('aboutus.html')
 
 if __name__ == "__main__":
-    app.run()
+    app.run(debug=True, host='0.0.0.0')

@@ -59,15 +59,17 @@ def upload_image():
         flash('Image successfully uploaded and displayed below')
         return render_template('index.html', filename=saved_file_name_prefix + '.' + extension)
     else:
-        flash('Allowed image types are - png')
+        flash('Allowed image types are - png,jpeg')
         return redirect(request.url)
-
 
 @app.route('/display/<filename>')
 def display_image(filename):
     #print('display_image filename: ' + filename)
     return redirect(url_for('static', filename='uploads/' + filename), code=301)
 
+@app.route('/about')
+def desc():
+    return render_template('aboutus.html')
 
 if __name__ == "__main__":
     app.run()

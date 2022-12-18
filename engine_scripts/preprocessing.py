@@ -4,7 +4,7 @@ import cv2
 import sys
 import os
 
-def preprocess_image(path):
+def bake(path):
     raw_img_object = cv2.imread(path)
     object_image = cv2.resize(object_image, (128,128))
     object_image = object_image / 255.0

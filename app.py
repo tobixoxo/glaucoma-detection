@@ -2,6 +2,7 @@ from flask import Flask, flash, request, redirect, url_for, render_template
 import urllib.request
 import os
 from werkzeug.utils import secure_filename
+from engine_scripts import preprocessing
 
 app = Flask(__name__)
 
@@ -24,10 +25,10 @@ def count_up():
 def allowed_file(filename):
     return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
 
-
 @app.route('/')
 def home():
     return render_template('index.html')
+
 
 
 @app.route('/', methods=['POST'])
@@ -56,8 +57,12 @@ def upload_image():
             app.config['UPLOAD_FOLDER'], saved_file_name_prefix + '.' + extension))
 
         #print('upload_image filename: ' + filename)
-        flash('Image successfully uploaded and displayed below')
-        return render_template('index.html', filename=saved_file_name_prefix + '.' + extension)
+        flash('Image successfully uploaded and glaucoma status displayed below')
+
+        preprocessed_image = preprocessing.bake(os.path.join(app.config['UPLOAD_FOLDER'], saved_file_name_prefix + '.' + extension))
+        print("success")
+
+        return render_template('index.html', filename=saved_file_name_prefix + '.' + extension,glaucoma_status="nigga")
     else:
         flash('Allowed image types are - png,jpeg')
         return redirect(request.url)
